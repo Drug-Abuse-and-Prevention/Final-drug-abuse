@@ -1,0 +1,9 @@
+author: "Jaclyn Peiser"
+content: "Police have not yet made an arrest, though they are reviewing security tapes and analyzing the graffiti.\r\nSuch [an] incident an offense against the Memorial Site is, above all, an outrageous attack o… [+2869 chars]"
+description: "The graffiti on the Auschwitz II-Birkenau barracks included « two references to the Old Testament, often used by antisemites, and denial slogans, » the museum said."
+publishedAt: "2021-10-06T12:22:31Z"
+source: {id: 'the-washington-post', name: 'The Washington Post'}
+title: "Auschwitz II-Birkenau barracks vandalized with antisemitic, Holocaust denying graffiti - The Washington Post"
+url: "https://www.washingtonpost.com/nation/2021/10/06/auschwitz-birkenau-vandalized-holocaust/"
+urlToImage: "https://www.washingtonpost.com/wp-apps/imrs.php?src=https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/QPGYYHTAOUI6XILXO5S7FGUVEQ.jpg&w=1440"
+[[Prototype]]: Object

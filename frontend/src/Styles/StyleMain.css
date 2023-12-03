@@ -1,0 +1,7 @@
+.bg{
+    background-image: url(../Images/main_page_bg.jpg);
+    /* width: 200px;
+    height: 200px; */
+    background-size: cover;
+    background-position: center;
+}
