@@ -8,6 +8,7 @@ const reportSchema = new mongoose.Schema({
   time: { type: String, required: true },
   description: { type: String, required: true },
   resolved: { type: Boolean, default: false },
+  userIp: { type: String, required: false },
   seriousness: {
     type: String,
     required: true,

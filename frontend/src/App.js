@@ -16,6 +16,7 @@ import AdminLogin from "./Pages/AdminLogin";
 import AdminDashboard from "./Pages/AdminDashboard";
 import TotalReports from "./Components/Admin/TotalReports";
 import Registeredemployees from "./Components/Admin/Registeredemployees"; 
+import HelpDesk from "./Pages/HelpDesk";
 
 function App() {
   const [whatsappData, setWhatsappData] = useState({
@@ -27,18 +28,6 @@ function App() {
     localStorage.getItem("isAdminLoggedIn") === "true"
   );
 
-  const handleWhatsAppSubmit = async () => {
-    try {
-      console.log("Sending WhatsApp message:", whatsappData);
-      const response = await ApiService.sendWhatsAppMessage(
-        whatsappData.mobile,
-        whatsappData.message
-      );
-      console.log("WhatsApp message sent. Response:", response);
-    } catch (error) {
-      console.error("Error sending WhatsApp message:", error);
-    }
-  };
 
   const handleAdminLogin = (loggedIn) => {
     setAdminLoggedIn(loggedIn);
@@ -64,6 +53,7 @@ function App() {
         <Route path="/totalreports" element={<TotalReports />} />
         <Route path="/registeredemployees" element={<Registeredemployees />} /> {/* Add this line */}
         <Route path="/admindashboard" element={<AdminDashboard />} />
+        <Route path="/helpdesk" element={<HelpDesk />} />
       </Routes>
       { !isAdminLoggedIn && !isAdminPage && <Footer />}
     </Router>

@@ -6,9 +6,10 @@ const Report = require("./Models/ReportModel");
 const EmployeeData = require("./Models/EmployeeModel");
 const twilio = require("twilio");
 const bodyParser = require("body-parser");
+const Post = require("./Models/PostModel");
+const requestIp = require("request-ip");
 
 const sgMail = require("@sendgrid/mail");
-
 
 dotenv.config();
 
@@ -19,15 +20,17 @@ const URI = process.env.MONGO_URI;
 const client = twilio(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN
-  );
-  
-  //sgMail setup
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-  
-  app.use(express.json());
-  app.use(cors());
-  app.use(cors());
+);
+
+//sgMail setup
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+app.use(express.json());
+app.use(cors());
+app.use(cors());
 app.use(bodyParser.json());
+app.set("trust proxy", true);
+app.use(requestIp.mw());
 
 mongoose
   .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -123,6 +126,8 @@ app.post("/employee", async (req, res) => {
 
 app.get("/api/reportsPerDay", async (req, res) => {
   try {
+    console.log("logged here");
+    console.log(req.clientIp);
     const reportsPerDay = await Report.aggregate([
       {
         $group: {
@@ -247,8 +252,6 @@ app.put("/api/resolveReport/:id", async (req, res) => {
   }
 });
 
-
-
 ///number of reports
 
 app.get("/api/totalresolvedreports", async (req, res) => {
@@ -267,6 +270,58 @@ app.get("/api/totalpendingreports", async (req, res) => {
     res.json(pendingReports);
   } catch (error) {
     console.error("Error fetching pending reports:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Add these routes to your existing Express app
+app.get("/api/posts", async (req, res) => {
+  try {
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .populate("comments");
+    res.json(posts);
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.post("/api/posts", async (req, res) => {
+  try {
+    const { text } = req.body;
+    const newPost = new Post({ text });
+    await newPost.save();
+    res.status(201).json(newPost);
+  } catch (error) {
+    console.error("Error creating post:", error);
+    res.status(400).json({ error: "Bad Request" });
+  }
+});
+
+// Add these routes to your existing Express app
+app.put("/api/posts/:id/like", async (req, res) => {
+  try {
+    const post = await Post.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { likes: 1 } },
+      { new: true }
+    );
+    res.json(post);
+  } catch (error) {
+    console.error("Error liking post:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.post("/api/posts/:id/comment", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    post.comments.push({ text: req.body.text });
+    await post.save();
+    res.json(post);
+  } catch (error) {
+    console.error("Error commenting on post:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
