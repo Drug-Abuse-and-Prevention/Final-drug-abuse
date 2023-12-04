@@ -17,6 +17,11 @@ import AdminDashboard from "./Pages/AdminDashboard";
 import TotalReports from "./Components/Admin/TotalReports";
 import Registeredemployees from "./Components/Admin/Registeredemployees"; 
 import HelpDesk from "./Pages/HelpDesk";
+import Help from "./Pages/Help";
+import Educational from "./Pages/Educational";
+import OnlineServices from "./Pages/OnlineServices";
+import CollegeSupportForm from "./Pages/CollegeSupportForm";
+import StudentSupportDetails from "./Components/Admin/StudentSupportDetails";
 
 function App() {
   const [whatsappData, setWhatsappData] = useState({
@@ -54,6 +59,11 @@ function App() {
         <Route path="/registeredemployees" element={<Registeredemployees />} /> {/* Add this line */}
         <Route path="/admindashboard" element={<AdminDashboard />} />
         <Route path="/helpdesk" element={<HelpDesk />} />
+        <Route path="/help" element={<Help />} />
+        <Route path="/educational" element={<Educational />} />
+        <Route path="/onlineServices" element={<OnlineServices />} />
+        <Route path="/collegesupportform" element={<CollegeSupportForm />} />
+        <Route path="/studentSupportDetails" element={<StudentSupportDetails />} />
       </Routes>
       { !isAdminLoggedIn && !isAdminPage && <Footer />}
     </Router>

@@ -8,7 +8,7 @@ const twilio = require("twilio");
 const bodyParser = require("body-parser");
 const Post = require("./Models/PostModel");
 const requestIp = require("request-ip");
-
+const CollegeSupport = require("./Models/CollegeSupportModel");
 const sgMail = require("@sendgrid/mail");
 
 dotenv.config();
@@ -322,6 +322,30 @@ app.post("/api/posts/:id/comment", async (req, res) => {
     res.json(post);
   } catch (error) {
     console.error("Error commenting on post:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+app.post("/api/college-support", async (req, res) => {
+  try {
+    const formData = req.body;
+    const newSubmission = await CollegeSupport.create(formData);
+    res.json(newSubmission);
+  } catch (error) {
+    console.error("Error submitting form:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+// Endpoint to get student support details
+app.get("/api/student-support", async (req, res) => {
+  try {
+    const studentDetails = await CollegeSupport.find();
+    res.json(studentDetails);
+  } catch (error) {
+    console.error("Error fetching student details:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

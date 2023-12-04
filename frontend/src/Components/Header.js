@@ -15,7 +15,7 @@ const Header = () => {
           <img src={nithLogo} alt="NITH Logo" className="h-20 w-20 mr-2" />
           <div className="ml-2">
             <h1 className="text-xl font-bold text-gray-500">National Institute of Technology Hamirpur</h1>
-            <p className="text-sm text-gray-500">Drug Abuse & Prevention</p>
+            <p className="text-sm text-gray-500">Drug Abuse Reporting & Prevention</p>
           </div>
         </div>
         {/* Menu button with dynamic icon */}

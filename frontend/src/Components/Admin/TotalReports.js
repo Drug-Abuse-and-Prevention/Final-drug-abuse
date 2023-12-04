@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import AdminHeader from './AdminHeader';
 
 function TotalReports() {
   const [allReports, setAllReports] = useState([]);
@@ -55,7 +56,10 @@ function TotalReports() {
   };
 
   return (
-    <div className="container mx-auto mt-8">
+    <div>
+      <AdminHeader/>
+    <div className="container mx-auto mt-8 p-10">
+      
       <h1 className="text-3xl font-bold mb-4">All Reports</h1>
 
       {/* Filter Buttons */}
@@ -119,6 +123,7 @@ function TotalReports() {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 }

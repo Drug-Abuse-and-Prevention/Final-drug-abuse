@@ -23,10 +23,10 @@ function AdminDashboard() {
     };
 
     return (
-      <div>
+      <div className="admin-dashboard mb-10">
         <AdminHeader />
         <AdminNavbar openSidebar={openSidebar}/>
-        <div style={{ display: "flex" }}> 
+        <div style={{ display: "flex" }} className='dashboard'> 
           
           <Sidebar OpenSidebarToggle={isSidebarOpen} openSidebar={closeSidebar} toggleTotalReports={toggleTotalReports} />
           

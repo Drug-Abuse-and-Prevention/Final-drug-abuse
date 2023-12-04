@@ -1,4 +1,3 @@
-// HelpDesk.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -8,6 +7,7 @@ const HelpDesk = () => {
   const [commentText, setCommentText] = useState("");
   const [commentPostId, setCommentPostId] = useState(null);
 
+  const [likedPosts, setLikedPosts] = useState([]);
   const fetchPosts = async () => {
     try {
       const response = await axios.get("http://localhost:3001/api/posts");
@@ -23,7 +23,7 @@ const HelpDesk = () => {
         text: newPostText,
       });
       setNewPostText("");
-      fetchPosts(); // Refresh the posts after submitting a new one
+      fetchPosts(); 
     } catch (error) {
       console.error("Error creating post:", error);
     }
@@ -31,8 +31,13 @@ const HelpDesk = () => {
 
   const handleLike = async (postId) => {
     try {
-      await axios.put(`http://localhost:3001/api/posts/${postId}/like`);
-      fetchPosts();
+      if (!likedPosts.includes(postId)) {
+        await axios.put(`http://localhost:3001/api/posts/${postId}/like`);
+        setLikedPosts((prevLikedPosts) => [...prevLikedPosts, postId]);
+        fetchPosts();
+      } else {
+        console.log("Post already liked.");
+      }
     } catch (error) {
       console.error("Error liking post:", error);
     }
@@ -60,18 +65,18 @@ const HelpDesk = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, []); // Fetch posts on component mount
+  }, []); 
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container mx-auto mt-8 p-10">
       <h1 className="text-4xl font-bold mb-4">
         Breaking Chains: Share Your Struggle, Find Support.
       </h1>
       <div className="mb-4">
         <textarea
-          className="w-full p-2 border border-gray-300 rounded"
+          className="w-full p-2 border border-gray-300 rounded bg-blue-100"
           rows="4"
-          placeholder="Enter your post..."
+          placeholder="Share your ideas and struggles here..."
           value={newPostText}
           onChange={(e) => setNewPostText(e.target.value)}
         />
@@ -92,9 +97,11 @@ const HelpDesk = () => {
             <p className="mb-2">
               <span className="font-bold">{post.author}:</span> {post.text}
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 ">
               <button
-                className="text-blue-500 hover:underline"
+                className={`text-blue-500 hover:underline ${
+                  likedPosts.includes(post._id) ? "text-gray-500" : ""
+                }`}
                 onClick={() => handleLike(post._id)}
               >
                 Like ({post.likes})
@@ -109,7 +116,7 @@ const HelpDesk = () => {
             {commentPostId === post._id && (
               <div className="mt-2">
                 <textarea
-                  className="w-full p-2 border border-gray-300 rounded"
+                  className="w-full p-2 border  border-gray-300 rounded"
                   rows="2"
                   placeholder="Enter your comment..."
                   value={commentText}
@@ -124,7 +131,7 @@ const HelpDesk = () => {
               </div>
             )}
             {post.comments.length > 0 && (
-              <div className="mt-4 p-2 bg-gray-100 rounded">
+              <div className="mt-4 p-2 bg-gray-900 rounded ">
                 <h3 className="font-bold mb-2">Comments:</h3>
                 {post.comments.map((comment, index) => (
                   <p key={index} className="mb-1">

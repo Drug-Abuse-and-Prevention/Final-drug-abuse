@@ -22,7 +22,7 @@ const AdminLogin = ({ onLogin }) => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-300">
+    <div className="flex items-center justify-center h-screen bg-gray-300 bg">
       <div className="bg-white p-8 rounded shadow-md w-96">
         <h2 className="text-gray-500 text-2xl font-semibold mb-6">Admin Login</h2>
         <div className="mb-4">

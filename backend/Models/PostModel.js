@@ -5,7 +5,6 @@ const postSchema = new mongoose.Schema({
   likes: { type: Number, default: 0 },
   comments: [{ text: String }],
   createdAt: { type: Date, default: Date.now },
-  // Adding a random name to the schema
   author: {
     type: String,
     default: `Anonymous${Math.floor(Math.random() * 1000000)}`,

@@ -7,7 +7,7 @@ function Sidebar({ OpenSidebarToggle, openSidebar, toggleTotalReports }){
     <aside id="sidebar" className={OpenSidebarToggle ? 'sidebar-responsive' : ''}>
     <div className='sidebar-title'>
         <div className='sidebar-brand'>
-          <BsStack className='icon_header' /> States
+          <BsStack className='icon_header' /> Features
         </div>
         <span className='icon close_icon' onClick={openSidebar}>
           X
@@ -27,12 +27,13 @@ function Sidebar({ OpenSidebarToggle, openSidebar, toggleTotalReports }){
             <BsListCheck className='icon' /> Total Registered Employee
           </Link>
         </li>
-        
         <li className='sidebar-list-item'>
-          <Link to='/settings' onClick={openSidebar}>
-            <BsFillGearFill className='icon' /> Setting
+          <Link to='/studentSupportDetails' onClick={openSidebar}>
+            <BsListCheck className='icon' /> Student Support Details
           </Link>
         </li>
+        
+       
       </ul>
     </aside>
   );
